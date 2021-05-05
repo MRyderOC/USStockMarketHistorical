@@ -29,6 +29,7 @@ def createLogger(name: str, fmt: str ='[%(name)s](%(asctime)s): %(levelname)s \t
 
 def getTickerData(logger: logging.getLogger = None) -> (pd.DataFrame, pd.DataFrame):
     logger.info('getTickerData(): Start of a function') if logger else None
+    pd.set_option("display.max_columns", None)
     df = tickersData.scrapeWhole(logger)
     # Drop unnecessary columns
     df.drop(['No.', 'Price', 'Change', 'Volume', 'P/E', 'Market Cap'], axis=1, inplace=True)
@@ -41,11 +42,10 @@ def getTickerData(logger: logging.getLogger = None) -> (pd.DataFrame, pd.DataFra
 
 def collectData(data: pd.DataFrame, logger: logging.getLogger = None):
     startTime = time.time()
-    l = len(data)
-    for i in range(l):
+    for i in range(len(data)):
         try:
             tmp = yf.Ticker(data.iloc[i].Ticker).history(period='max')
-            tmp.to_csv('/stocksData/'+data.iloc[i].Ticker+'.csv')
+            tmp.to_csv('./stocksData/'+data.iloc[i].Ticker+'.csv')
             if i % 100 == 0: logger.info(f'SO FAR, SO GOOD: \t #{i}')
         except:
             with open('failed.txt', 'a') as file:
@@ -56,7 +56,7 @@ def collectData(data: pd.DataFrame, logger: logging.getLogger = None):
 
 
 if __name__ == '__main__':
-    logger = createLogger('Failed')
+    logger = createLogger('Collect Data')
 
     stocks, ETFs = getTickerData(logger)
     collectData(stocks, logger)

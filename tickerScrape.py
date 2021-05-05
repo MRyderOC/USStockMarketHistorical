@@ -125,7 +125,8 @@ def scrapeWhole(logger: logging.getLogger = None):
         10:'Change',
         11:'Volume',}
 
-    df = scrapeFinviz(df, columnsNames, lastPage=33, logger=logger)
+    pd.set_option("display.max_columns", None)
+    df = scrapeFinviz(df, columnsNames, lastPage=10, logger=logger)
     return df
 
 
