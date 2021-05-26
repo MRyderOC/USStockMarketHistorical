@@ -21,6 +21,7 @@ Fetching stock market data on daily basis from yahoo!finance.
 
 - tickerScrape
   * This script collect the ticker names from finviz.com.
+  * You can find the name of the tickers along with some additional data such as sector or industry the company is in tickers.csv file.
 - collect
   * You can use this script to collect the historical data from yfinance API.
   * The data will store in stocksData folder.

@@ -59,4 +59,5 @@ if __name__ == '__main__':
     logger = createLogger('Collect Data')
 
     stocks, ETFs = getTickerData(logger)
+    stocks.to_csv('./tickers.csv')
     collectData(stocks, logger)
